@@ -164,6 +164,7 @@ impl<'a> BitReader<'a> {
     /// reader.read_bits(16).unwrap();
     /// assert_eq!(reader.is_empty(), true);
     /// ```
+    #[inline(always)]
     pub fn is_empty(&self) -> bool {
         self.byte_pos >= self.data.len() && self.bit_pos == 0
     }
