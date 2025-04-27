@@ -10,3 +10,10 @@ keywords = ["brotli", "compression", "decompression", "rust", "data"]
 
 [dependencies]
 thiserror = "2.0.12"
+
+[dev-dependencies]
+criterion = "0.5.1"
+
+[[bench]]
+name = "bitreader"
+harness = false
