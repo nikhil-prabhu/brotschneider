@@ -1,3 +1,5 @@
+use crate::error::BitReaderError;
+
 /// BitReader reads individual bits and bit sequences from a byte array.
 #[derive(Clone)]
 pub struct BitReader<'a> {
@@ -61,11 +63,9 @@ impl<'a> BitReader<'a> {
     ///
     /// assert_eq!(bits, 0b1100);
     /// ```
-    pub fn read_bits(&mut self, n: u8) -> Result<u32, String> {
+    pub fn read_bits(&mut self, n: u8) -> Result<u32, BitReaderError> {
         if n == 0 || n > 32 {
-            return Err(format!(
-                "Can only read between 1 and 32 bits, requested {n}"
-            ));
+            return Err(BitReaderError::InvalidBitCount(n));
         }
 
         let mut bits_left = n;
@@ -73,7 +73,7 @@ impl<'a> BitReader<'a> {
 
         while bits_left > 0 {
             if self.byte_pos >= self.data.len() {
-                return Err("Unexpected end of input".to_string());
+                return Err(BitReaderError::UnexpectedEndOfInput);
             }
 
             let current_byte = self.data[self.byte_pos];
@@ -120,7 +120,7 @@ impl<'a> BitReader<'a> {
     ///
     /// assert_eq!(bits, 0b1100);
     /// ```
-    pub fn peek_bits(&self, n: u8) -> Result<u32, String> {
+    pub fn peek_bits(&self, n: u8) -> Result<u32, BitReaderError> {
         let mut clone = self.clone();
         clone.read_bits(n)
     }
