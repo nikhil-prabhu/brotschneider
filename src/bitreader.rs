@@ -63,7 +63,9 @@ impl<'a> BitReader<'a> {
     /// ```
     pub fn read_bits(&mut self, n: u8) -> Result<u32, String> {
         if n == 0 || n > 32 {
-            return Err(format!("Can only read between 1 and 32 bits, requested {n}"));
+            return Err(format!(
+                "Can only read between 1 and 32 bits, requested {n}"
+            ));
         }
 
         let mut bits_left = n;
@@ -79,7 +81,7 @@ impl<'a> BitReader<'a> {
             let bits_to_take = bits_left.min(available_bits);
 
             let shift = available_bits - bits_to_take;
-            let mask= ((1 << bits_to_take) - 1) as u8;
+            let mask = ((1 << bits_to_take) - 1) as u8;
             let bits = (current_byte >> shift) & mask;
 
             result = (result << bits_to_take) | (bits as u32);
