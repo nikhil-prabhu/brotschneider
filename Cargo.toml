@@ -1,0 +1,11 @@
+[package]
+name = "brotschneider"
+version = "0.1.0"
+edition = "2024"
+description = "A pure Rust Brotli compression and decompression library - precision slicing for your data!"
+license = "GPL-3.0"
+repository = "https://github.com/nikhil-prabhu/brotschneider"
+documentation = "https://docs.rs/brotschneider"
+keywords = ["brotli", "compression", "decompression", "rust", "data"]
+
+[dependencies]
