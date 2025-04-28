@@ -11,3 +11,10 @@ pub enum BitReaderError {
     #[error("Unexpected end of input")]
     UnexpectedEndOfInput,
 }
+
+/// Errors that can occur while writing bits.
+#[derive(Debug, Error, Clone, PartialEq, Eq)]
+pub enum BitWriterError {
+    #[error("attempted to write too many bits ({0})")]
+    TooManyBits(u8),
+}
