@@ -18,3 +18,16 @@ pub enum BitWriterError {
     #[error("attempted to write too many bits ({0})")]
     TooManyBits(u8),
 }
+
+/// Errors that can occur while decoding Huffman codes.
+#[derive(Debug, Error)]
+pub enum HuffmanError {
+    #[error("Too many codes for bit length {0}")]
+    OverfullTree(u8),
+
+    #[error("Incomplete Huffman tree")]
+    IncompleteTree,
+
+    #[error("Read error: {0}")]
+    BitReaderError(#[from] BitReaderError),
+}
