@@ -125,6 +125,49 @@ impl<'a> BitReader<'a> {
         clone.read_bits(n)
     }
 
+    /// Skip `n` bits without reading them.
+    ///
+    /// # Arguments
+    ///
+    /// * `count` - The number of bits to skip.
+    ///
+    /// # Returns
+    ///
+    /// * `Ok(())` - If the skip was successful.
+    /// * `Err(BitReaderError)` - If an error occurs during the skip.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use brotschneider::BitReader;
+    ///
+    /// let data = [0b11001100, 0b10101010];
+    /// let mut reader = BitReader::new(&data);
+    ///
+    /// reader.skip_bits(4).unwrap();
+    /// assert_eq!(reader.read_bits(4).unwrap(), 0b1100);
+    /// ```
+    pub fn skip_bits(&mut self, mut count: usize) -> Result<(), BitReaderError> {
+        while count > 0 {
+            if self.byte_pos >= self.data.len() {
+                return Err(BitReaderError::UnexpectedEndOfInput);
+            }
+
+            let bits_left_in_byte = 8 - self.bit_pos as usize;
+            let bits_to_skip = bits_left_in_byte.min(count);
+
+            self.bit_pos += bits_to_skip as u8;
+            if self.bit_pos == 8 {
+                self.bit_pos = 0;
+                self.byte_pos += 1;
+            }
+
+            count -= bits_to_skip;
+        }
+
+        Ok(())
+    }
+
     /// Align to the next byte boundary.
     ///
     /// # Examples
