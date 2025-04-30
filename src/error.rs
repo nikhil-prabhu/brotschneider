@@ -1,6 +1,7 @@
 use thiserror::Error;
 
 /// Errors that can occur while reading bits.
+#[non_exhaustive]
 #[derive(Debug, Error, Clone, PartialEq, Eq)]
 pub enum BitReaderError {
     /// Requested an invalid number of bits (must be between 1 and 32).
@@ -13,6 +14,7 @@ pub enum BitReaderError {
 }
 
 /// Errors that can occur while writing bits.
+#[non_exhaustive]
 #[derive(Debug, Error, Clone, PartialEq, Eq)]
 pub enum BitWriterError {
     #[error("attempted to write too many bits ({0})")]
@@ -20,6 +22,7 @@ pub enum BitWriterError {
 }
 
 /// Errors that can occur while decoding Huffman codes.
+#[non_exhaustive]
 #[derive(Debug, Error)]
 pub enum HuffmanError {
     #[error("Too many codes for bit length {0}")]
