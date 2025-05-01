@@ -1,7 +1,6 @@
 use crate::BitReader;
 use crate::error::HuffmanError;
 
-#[allow(dead_code)]
 pub struct HuffmanTree {
     /// Map from Huffman code to symbol.
     pub lookup: Vec<u16>,
