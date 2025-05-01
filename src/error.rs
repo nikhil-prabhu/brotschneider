@@ -34,3 +34,15 @@ pub enum HuffmanError {
     #[error("Read error: {0}")]
     BitReaderError(#[from] BitReaderError),
 }
+
+#[derive(Debug, Error)]
+pub enum MetaBlockError {
+    #[error("Bit reading error: {0}")]
+    BitReader(#[from] BitReaderError),
+
+    #[error("Huffman decoding error: {0}")]
+    Huffman(#[from] HuffmanError),
+
+    #[error("Unsupported feature in meta-block")]
+    Unsupported,
+}
